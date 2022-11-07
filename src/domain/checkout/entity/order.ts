@@ -30,6 +30,12 @@ export default class Order {
     this.validate();
   }  
 
+  changeItems(items: OrderItem[])
+  {
+    this._items = items;  
+    this.validate();
+  }
+
   validate(): boolean {
     if (this._id.length === 0) {
       throw new Error("Id is required");

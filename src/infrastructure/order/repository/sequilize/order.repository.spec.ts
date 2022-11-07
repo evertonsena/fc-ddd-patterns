@@ -131,7 +131,20 @@ describe("Order repository test", () => {
     customerNew.changeAddress(address);
     await customerRepository.create(customerNew);    
 
+    const product2 = new Product("999", "Product 2", 50);
+    await productRepository.create(product2);
+
+    const ordemItem2 = new OrderItem(
+      "2",
+      product2.name,
+      product2.price,
+      product2.id,
+      1
+    );
+
+
     order.changeCustomerId(customerNew.id);
+    order.changeItems([ordemItem, ordemItem2]);
 
     await orderRepository.update(order);
 
@@ -150,9 +163,17 @@ describe("Order repository test", () => {
           name: ordemItem.name,
           price: ordemItem.price,
           quantity: ordemItem.quantity,
-          order_id: "123",
-          product_id: "123",
+          order_id: order.id,
+          product_id: product.id,
         },
+        {
+          id: ordemItem2.id,
+          name: ordemItem2.name,
+          price: ordemItem2.price,
+          quantity: ordemItem2.quantity,
+          order_id: order.id,
+          product_id: product2.id,
+        },        
       ],
     });
     
